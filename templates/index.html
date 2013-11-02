@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Home</title>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+        <script src="{{ url_for('static', filename='jquery.ui.datepicker.validation.pack.js') }}" ></script>
+        <script> $(function() {
+                $(".datepicker").datepicker({dateFormat: "yy-mm-dd"});
+                $("#addtrip1").validate(); 
+                $("#addtrip2").validate(); 
+                $("#addtrip3").validate(); 
+            });
+        </script>
+    </head>
+    <body>
+    <div class="container">
+        <p>You are logged in as {{ username }}</p>
+        <ul id="links">
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+
+        <h1>Add new trip</h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <form id="addtrip1" action="addtrip" method="post">
+                        <div class="form-group">
+                            <input required class="datepicker" name="date" placeholder="Date" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <input required name="car" placeholder="Car"/>
+                        </div>
+                        <div class="form-group">
+                            <input required name="destination" placeholder="Destination"/>
+                        </div>
+                        <div class="form-group">
+                            <input required name="reason" placeholder="Reason for Trip"/>
+                        </div>
+                        <div class="form-group">
+                            <input required name="distance" type="number" placeholder="Distance (km)"/>
+                         </div>
+                        <input type="submit" value="Add">
+                    </form>
+                </div>
+            </div> <!-- row -->
+
+
+        <h1>This year's trips</h2>
+            <ul>
+                {% if trips|length == 0 %}
+                    <p>No trips</p>
+                {% else %}
+                    {% for trip in trips %}
+                    <li>On {{ trip.date.year }}/{{ trip.date.month }}/{{ trip.date.day }} drove {{ trip.car }} {{ trip.distance }} km to {{ trip.destination }} for {{ trip.reason }}<form style="display:inline" action="deletetrip/{{ trip._id }}" method="get"><input type="submit" value="x"/></form></li>
+                    {% endfor %} 
+                {% endif %}
+            </ul>
+    </div> <!-- container -->
+    <body>
+</html>
