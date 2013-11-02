@@ -9,7 +9,6 @@ app.secret_key = 'dlakfdlkhdaghdao84157-98415-98hfdjTQ$%$%$%'
 def addtrip():
     if 'username' in session:
         username = session['username']
-        print request.form['date']
         date = datetime.datetime.strptime(request.form['date'], '%Y-%m-%d')
         car = request.form['car']
         destination = request.form['destination']
@@ -20,10 +19,31 @@ def addtrip():
     else:
         return redirect(url_for('login'))
 
+@app.route("/addodometer", methods=['POST'])
+def addodometer():
+    if 'username' in session:
+        username = session['username']
+        date = datetime.datetime.strptime(request.form['date'], '%Y-%m-%d')
+        car = request.form['car']
+        km = request.form['km']
+        objectid = data.add_odometer(username, date, car, km)
+        return redirect(url_for('index'))
+    else:
+        return redirect(url_for('login'))
+
+
 @app.route("/deletetrip/<objectid>")
 def deletetrip(objectid):
      if 'username' in session:
          num_removed = data.delete_trip(objectid)
+         return redirect(url_for('index'))
+     else:
+         return redirect(url_for('login'))
+
+@app.route("/deleteodometer/<objectid>")
+def deleteodometer(objectid):
+     if 'username' in session:
+         num_removed = data.delete_odometer(objectid)
          return redirect(url_for('index'))
      else:
          return redirect(url_for('login'))
@@ -33,8 +53,10 @@ def index():
     if 'username' in session:
         username = session['username']
         trips = data.get_trips(username)
+        odometers = data.get_odometers(username)
         defaults = {'date': datetime.datetime.now()}
-        return render_template('index.html', username=username, trips=trips)
+        return render_template('index.html', username=username, trips=trips,
+                               odometers=odometers, totalkm=data.get_total_km_for_year(username, 2013))
     else:
         return redirect(url_for('login'))
 

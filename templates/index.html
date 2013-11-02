@@ -11,9 +11,7 @@
         <script src="{{ url_for('static', filename='jquery.ui.datepicker.validation.pack.js') }}" ></script>
         <script> $(function() {
                 $(".datepicker").datepicker({dateFormat: "yy-mm-dd"});
-                $("#addtrip1").validate(); 
-                $("#addtrip2").validate(); 
-                $("#addtrip3").validate(); 
+                $("#addtrip").validate(); 
             });
         </script>
     </head>
@@ -25,9 +23,7 @@
         </ul>
 
         <h1>Add new trip</h1>
-            <div class="row">
-                <div class="col-md-4">
-                    <form id="addtrip1" action="addtrip" method="post">
+                    <form id="addtrip" action="addtrip" method="post">
                         <div class="form-group">
                             <input required class="datepicker" name="date" placeholder="Date" type="text"/>
                         </div>
@@ -45,17 +41,40 @@
                          </div>
                         <input type="submit" value="Add">
                     </form>
-                </div>
-            </div> <!-- row -->
+        <h1>Add new odometer reading</h1>
+                    <form id="addodometer" action="addodometer" method="post">
+                        <div class="form-group">
+                            <input required class="datepicker" name="date" placeholder="Date" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <input required name="car" placeholder="Car"/>
+                        </div>
+                        <div class="form-group">
+                            <input required name="km" placeholder="km"/>
+                        </div>
+                        <input type="submit" value="Add">
+                    </form>
 
 
-        <h1>This year's trips</h2>
+        <h1>Odometer readings</h1>
+            <ul>
+                 {% if odometers|length == 0 %}
+                    <p>No readings</p>
+                {% else %}
+                    {% for odometer in odometers %}
+                    <li>{{ odometer.km }} km on {{ odometer.date.year }}-{{ odometer.date.month }}-{{ odometer.date.day }} for {{ odometer.car }} <form style="display:inline" action="deleteodometer/{{ odometer._id }}" method="get"><input type="submit" value="remove"/></form></li>
+                    {% endfor %} 
+                {% endif %}
+            </ul>
+       
+
+        <h1>This year's trips (total: {{ totalkm }}km)</h2>
             <ul>
                 {% if trips|length == 0 %}
                     <p>No trips</p>
                 {% else %}
                     {% for trip in trips %}
-                    <li>On {{ trip.date.year }}/{{ trip.date.month }}/{{ trip.date.day }} drove {{ trip.car }} {{ trip.distance }} km to {{ trip.destination }} for {{ trip.reason }}<form style="display:inline" action="deletetrip/{{ trip._id }}" method="get"><input type="submit" value="x"/></form></li>
+                    <li>On {{ trip.date.year }}-{{ trip.date.month }}-{{ trip.date.day }} drove {{ trip.car }} {{ trip.distance }} km to {{ trip.destination }} for {{ trip.reason }} <form style="display:inline" action="deletetrip/{{ trip._id }}" method="get"><input type="submit" value="remove"/></form></li>
                     {% endfor %} 
                 {% endif %}
             </ul>
