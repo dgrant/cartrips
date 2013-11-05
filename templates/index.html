@@ -21,6 +21,23 @@
         <ul id="links">
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
         </ul>
+            <p>Years:<p>
+            <ul>
+            {% for year in years %}
+              <li>
+                {% if year == selected_year %}
+                  {{ year }}
+                {% else %}
+                  <a href="{{ url_for('index_with_year', year=year) }}">{{ year }}</a>
+                {% endif %}
+              </li>
+            {% endfor %}
+            </ul>
+            <p>Cars:
+            {% for car in cars %}
+                {{ car }},
+            {% endfor %}
+            </p>
 
         <h1>Add new trip</h1>
                     <form id="addtrip" action="addtrip" method="post">

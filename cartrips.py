@@ -48,15 +48,26 @@ def deleteodometer(objectid):
      else:
          return redirect(url_for('login'))
 
+@app.route("/<int:year>")
+def index_with_year(year):
+    return index(year)
+
 @app.route("/")
-def index():
+def index(year=datetime.datetime.now().year):
     if 'username' in session:
         username = session['username']
-        trips = data.get_trips(username)
-        odometers = data.get_odometers(username)
-        defaults = {'date': datetime.datetime.now()}
-        return render_template('index.html', username=username, trips=trips,
-                               odometers=odometers, totalkm=data.get_total_km_for_year(username, 2013))
+        years = data.get_years(username)
+        trips = data.get_trips(username, year)
+        odometers = data.get_odometers(username, year)
+        cars = data.get_cars(username, year)
+        totalkm = data.get_total_km_for_year(username, year)
+        return render_template('index.html', username=username,
+                               trips=trips,
+                               odometers=odometers,
+                               totalkm=totalkm,
+                               cars=cars,
+                               years=years,
+                               selected_year=year)
     else:
         return redirect(url_for('login'))
 
