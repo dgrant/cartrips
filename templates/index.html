@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <title>Home</title>
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
@@ -39,6 +39,8 @@
             {% endfor %}
             </p>
 
+        <div class="row">     
+          <div class="col-sm-6">
         <h1>Add new trip</h1>
                     <form id="addtrip" action="addtrip" method="post">
                         <div class="form-group">
@@ -58,6 +60,9 @@
                          </div>
                         <input type="submit" value="Add">
                     </form>
+
+          </div>
+          <div class="col-sm-6">
         <h1>Add new odometer reading</h1>
                     <form id="addodometer" action="addodometer" method="post">
                         <div class="form-group">
@@ -71,18 +76,14 @@
                         </div>
                         <input type="submit" value="Add">
                     </form>
+          </div>
 
+        </div> <!-- row -->
 
-        <h1>Odometer readings</h1>
-            <ul>
-                 {% if odometers|length == 0 %}
-                    <p>No readings</p>
-                {% else %}
-                    {% for odometer in odometers %}
-                    <li>{{ odometer.km }} km on {{ odometer.date.year }}-{{ odometer.date.month }}-{{ odometer.date.day }} for {{ odometer.car }} <form style="display:inline" action="deleteodometer/{{ odometer._id }}" method="get"><input type="submit" value="remove"/></form></li>
-                    {% endfor %} 
-                {% endif %}
-            </ul>
+        <div class="row">
+
+          <div class="col-sm-6">
+
        
 
         <h1>This year's trips (total: {{ totalkm }}km)</h2>
@@ -95,6 +96,21 @@
                     {% endfor %} 
                 {% endif %}
             </ul>
+          </div>
+
+          <div class="col-sm-6">
+        <h1>Odometer readings</h1>
+            <ul>
+                 {% if odometers|length == 0 %}
+                    <p>No readings</p>
+                {% else %}
+                    {% for odometer in odometers %}
+                    <li>{{ odometer.km }} km on {{ odometer.date.year }}-{{ odometer.date.month }}-{{ odometer.date.day }} for {{ odometer.car }} <form style="display:inline" action="deleteodometer/{{ odometer._id }}" method="get"><input type="submit" value="remove"/></form></li>
+                    {% endfor %} 
+                {% endif %}
+            </ul>
+          </div>
+        </div> <!-- row -->
     </div> <!-- container -->
     <body>
 </html>
