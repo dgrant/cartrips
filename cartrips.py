@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from flask import Flask, redirect, request, render_template, session, url_for
 import data
 import datetime
@@ -75,6 +76,7 @@ def index(year=datetime.datetime.now().year):
 def login():
     if request.method == 'POST':
         session['username'] = request.form['username']
+        passowrd = request.form['password']
         return redirect(url_for('index'))
     else: #GET
         return render_template('login.html')
