@@ -1,0 +1,24 @@
+<!doctype html>
+<html ng-app="cartrips">
+  <head>
+    <base href="/">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-resource.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-cookies.js"></script>
+
+    <script src="js/http-auth-interceptor.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/app.js"></script>
+  </head>
+  <body>
+    <login-dialog></login-dialog>
+    <h2>Car trips</h2>
+    <div ng-view></div>
+    <logout-link></logout-link>
+  </body>
+</html>

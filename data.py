@@ -84,15 +84,22 @@ def add_trip(username, date, car, destination, reason, distance):
     }
     return trips.insert(trip)
 
-def get_trips(username, year):
-    start = datetime.datetime(year, 1, 1)
-    end = datetime.datetime(year, 12, 31)
+def get_trips(username, year=None):
     ret = []
-    for trip in trips.find({'username': username,
-                            'date': {"$gte": start, "$lte": end},
-                           }).sort("date"):
+    query = {'username': username}
+    if year != None:
+        start = datetime.datetime(year, 1, 1)
+        end = datetime.datetime(year, 12, 31)
+        query['date'] = {"$gte": start, "$lte": end}
+    for trip in trips.find(query).sort("date"):
         ret.append(trip)
     return ret
+
+def get_trip(objectid):
+    ret = trips.find_one({'_id': ObjectId(objectid)})
+    if ret != None:
+        ret['_id'] = str(ret['_id'])
+    return  ret
 
 def get_total_km_for_year(username, year):
     ret = 0
@@ -101,6 +108,5 @@ def get_total_km_for_year(username, year):
             ret += int(trip['distance'])
     return ret
    
-
 def delete_trip(objectid):
     return trips.remove(ObjectId(objectid))['n']
