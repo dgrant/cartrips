@@ -10,6 +10,8 @@ app = Flask(__name__)
 app.secret_key = 'dlakfdlkhdaghdao84157-98415-98hfdjTQ$%$%$%'
 auth = HTTPBasicAuth()
 
+DATETIME_FORMAT = '%Y-%m-%d'
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -22,7 +24,7 @@ def login_required(f):
 @login_required
 def addtrip():
     username = session['username']
-    date = datetime.datetime.strptime(request.form['date'], '%Y-%m-%d')
+    date = datetime.datetime.strptime(request.form['date'], DATETIME_FORMAT)
     car = request.form['car']
     destination = request.form['destination']
     reason = request.form['reason']
@@ -34,7 +36,7 @@ def addtrip():
 @login_required
 def addodometer():
     username = session['username']
-    date = datetime.datetime.strptime(request.form['date'], '%Y-%m-%d')
+    date = datetime.datetime.strptime(request.form['date'], DATETIME_FORMAT)
     car = request.form['car']
     km = request.form['km']
     objectid = data.add_odometer(username, date, car, km)
@@ -103,17 +105,14 @@ def get_pw(username):
 
 # GET Trips
 @app.route('/api/trips', methods=['GET'])
-#@auth.login_required
+@auth.login_required
 def get_trips():
-    #trips = data.get_trips(auth.username())
-    trips = data.get_trips('david')
+    trips = data.get_trips(auth.username())
     for trip in trips:
         trip['_id'] = str(trip['_id'])
-        trip['date'] = datetime.datetime.strftime(trip['date'], '%Y-%m-%d')
+        trip['date'] = datetime.datetime.strftime(trip['date'], DATETIME_FORMAT)
         del trip['ctime']
-    print trips
     _json = jsonify({'trips': trips})
-    print _json
     return _json
 
 # GET Trip
@@ -132,7 +131,7 @@ def get_trip(trip_id):
 def create_trip():
     if not request.json:
         abort(400)
-    date = datetime.datetime.strptime(request.json['date'], '%Y-%m-%d')
+    date = datetime.datetime.strptime(request.json['date'], DATETIME_FORMAT)
     car = request.json['car']
     destination = request.json['destination']
     reason = request.json['reason']
@@ -153,4 +152,4 @@ def serve_home():
 
 if __name__ == "__main__":
     app.debug = True
-    app.run('0.0.0.0')
+    app.run('0.0.0.0', port=5001)

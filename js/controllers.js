@@ -20,7 +20,7 @@ function LoginController($scope, $location, loginService) {
 }
 
 function ListCtrl($scope, $http) {
-  $http.get('http://localhost:5000/api/trips').
+  $http.get('http://localhost:5001/api/trips').
     success(function(data) {
         $scope.trips = data.trips;
     });
