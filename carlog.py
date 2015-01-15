@@ -54,7 +54,9 @@ def index_with_year(year):
     return index(year)
 
 @app.route("/")
-def index(year=datetime.datetime.now().year):
+def index(year=None):
+    if year == None:
+        year = datetime.datetime.now().year
     if 'username' in session:
         username = session['username']
         years = data.get_years(username)
