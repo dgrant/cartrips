@@ -3,7 +3,7 @@ from flask import Flask, redirect, request, render_template, session, url_for
 import data
 import datetime
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='')
 app.secret_key = 'dlakfdlkhdaghdao84157-98415-98hfdjTQ$%$%$%'
 
 @app.route("/addtrip", methods=['POST'])
