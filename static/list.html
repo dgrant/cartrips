@@ -1,12 +1,22 @@
 <table>
   <thead>
-  <tr>
-    <th>Trip</th>
-  </tr>
+    <th>Trips</th>
+    <th><a href="/trips/new"><span class="glyphicon glyphicon-plus-sign"/></a></th>
   </thead>
   <tbody>
-  <tr ng-repeat="trip in trips">
-    <td><a href="" target="_blank">{{trip.date}} {{trip.car}} {{trip.destination}}</a></td>
+  
+  {% for trip in trips %}
+    <tr {% if row_index iseven %}>
+      <td>On {{trip.datey}}</td>
+    </tr>
+    <tr>
+      <td>On {{trip.date}}</td>
+    </tr>
+  {% endfor %}
+
+  <tr blah ng-repeat="trip in trips">
+    <td>On {{trip.date}} drove {{trip.car}} to {{trip.destination}} {{trip.distance}}km to {{trip.destination}} for {{trip.reason}}.</td>
+    <td><a href="/trips/edit/{{trip._id}}"><span class="glyphicon glyphicon-pencil"></a></td>
   </tr>
   </tbody>
 </table>

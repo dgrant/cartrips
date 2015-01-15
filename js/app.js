@@ -4,22 +4,27 @@ angular.module('cartrips', ['ngRoute', 'ngCookies', 'cartripsDirectives', 'cartr
 
 .config(function($routeProvider, $locationProvider, $httpProvider) {
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-  $locationProvider.html5Mode(true).hashPrefix('/static/');
  
   $routeProvider
-    .when('/', {
+    .when('/trips', {
       controller:'ListCtrl',
       templateUrl:'/static/list.html'
     })
-    .when('/edit/:projectId', {
+    .when('/trips/edit/:projectId', {
       controller:'EditCtrl',
       templateUrl:'/static/detail.html'
     })
-    .when('/new', {
+    .when('/trips/new', {
       controller:'CreateCtrl',
       templateUrl:'/static/detail.html'
+    })
+    .when('/', {
+      conroller:'Welcome',
+      templateUrl:'/static/home.html'
     })
     .otherwise({
       redirectTo:'/'
     });
+
+  $locationProvider.html5Mode(true);
 });

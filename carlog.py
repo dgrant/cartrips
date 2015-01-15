@@ -126,8 +126,8 @@ def get_trip(trip_id):
         return jsonify(ret)
 
 # POST Trip
-#@app.route('/api/trips', methods=['POST'])
-#@auth.login_required
+@app.route('/api/trips', methods=['POST'])
+@auth.login_required
 def create_trip():
     if not request.json:
         abort(400)

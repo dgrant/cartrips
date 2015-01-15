@@ -25,3 +25,11 @@ function ListCtrl($scope, $http) {
         $scope.trips = data.trips;
     });
 }
+
+function CreateCtrl($scope, $location, $timeout, $http) {
+  $scope.save = function() {
+      $http.post('http://localhost:5001/api/trips', $scope.).
+        success(function(data) {
+            $location.path('/api/trips');
+        })};
+}
