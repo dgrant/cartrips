@@ -5,16 +5,7 @@
   </thead>
   <tbody>
   
-  {% for trip in trips %}
-    <tr {% if row_index iseven %}>
-      <td>On {{trip.datey}}</td>
-    </tr>
-    <tr>
-      <td>On {{trip.date}}</td>
-    </tr>
-  {% endfor %}
-
-  <tr blah ng-repeat="trip in trips">
+  <tr ng-repeat="trip in trips">
     <td>On {{trip.date}} drove {{trip.car}} to {{trip.destination}} {{trip.distance}}km to {{trip.destination}} for {{trip.reason}}.</td>
     <td><a href="/trips/edit/{{trip._id}}"><span class="glyphicon glyphicon-pencil"></a></td>
   </tr>
