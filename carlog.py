@@ -63,7 +63,9 @@ def index(year=None):
         trips = data.get_trips(username, year)
         odometers = data.get_odometers(username, year)
         cars = data.get_cars(username, year)
-        totalkm = data.get_total_km_for_year(username, year)
+        totalkm = {}
+        for car in cars:
+            totalkm[car] = data.get_total_km_for_year(username, year, car)
         return render_template('index.html', username=username,
                                trips=trips,
                                odometers=odometers,

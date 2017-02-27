@@ -20,7 +20,7 @@ def get_years(username):
 def get_cars(username, year):
     start = datetime.datetime(year, 1, 1)
     end = datetime.datetime(year, 12, 31)
-    ret = set() 
+    ret = set()
     for trip in trips.find({'username': username,
                             'date': {"$gte": start, "$lte": end},
         }):
@@ -94,13 +94,13 @@ def get_trips(username, year):
         ret.append(trip)
     return ret
 
-def get_total_km_for_year(username, year):
+def get_total_km_for_year(username, year, car):
     ret = 0
-    for trip in trips.find({'username': username}):
+    for trip in trips.find({'username': username, 'car': car}):
         if trip['date'].year == year:
             ret += int(trip['distance'])
     return ret
-   
+
 
 def delete_trip(objectid):
     return trips.remove(ObjectId(objectid))['n']

@@ -103,7 +103,14 @@
 
        
 
-        <h1>This year's trips (total: {{ totalkm }}km)</h2>
+        <h1>This year's trips</h2>
+	    <ul>
+		    {% for car in totalkm %}
+		    <li>
+		        {{ car }} : {{ totalkm[car] }} km
+		    </li>
+		    {% endfor %}
+	    </ul>
             <ul>
                 {% if trips|length == 0 %}
                     <p>No trips</p>
